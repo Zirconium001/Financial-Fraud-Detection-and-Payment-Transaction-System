@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fraud Dashboard | SentinelPay</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> SentinelPay · Fraud Operations</div>
+    <div class="user">
+      <span id="whoami"></span>
+      <button class="secondary small" id="refresh">Refresh</button>
+      <button class="secondary small" onclick="API.logout()">Sign out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="tabs">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="flagged">Flagged Queue</button>
+      <button class="tab" data-tab="rules">Rule Engine</button>
+      <button class="tab" data-tab="rings">Fraud Rings</button>
+      <button class="tab" data-tab="risk">Top Risk</button>
+      <button class="tab" data-tab="audit">Audit Trail</button>
+      <button class="tab" data-tab="blacklist">Blacklist</button>
+    </div>
+
+    <section id="tab-overview">
+      <div id="stats" class="grid cols-4"></div>
+      <div class="card mt">
+        <h3>Daily Transaction Summary</h3>
+        <div id="daily" class="muted">Loading…</div>
+      </div>
+    </section>
+
+    <section id="tab-flagged" class="hidden">
+      <div class="card">
+        <div class="flex-between">
+          <h3>Flagged / Quarantined Transactions</h3>
+          <span class="muted" id="flagged-count"></span>
+        </div>
+        <div id="flagged" class="muted">Loading…</div>
+      </div>
+    </section>
+
+    <section id="tab-rules" class="hidden">
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Active Rules</h3>
+          <div id="rules" class="muted">Loading…</div>
+        </div>
+        <div class="card">
+          <h3>Rule Hit Statistics</h3>
+          <div id="rule-stats" class="muted">Loading…</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-rings" class="hidden">
+      <div class="card">
+        <h3>Shared-Device Rings</h3>
+        <div id="device-rings" class="muted">Loading…</div>
+      </div>
+      <div class="card mt">
+        <h3>Shared-IP Rings</h3>
+        <div id="ip-rings" class="muted">Loading…</div>
+      </div>
+    </section>
+
+    <section id="tab-risk" class="hidden">
+      <div class="card">
+        <h3>Highest-Risk Accounts</h3>
+        <div id="risk" class="muted">Loading…</div>
+      </div>
+    </section>
+
+    <section id="tab-audit" class="hidden">
+      <div class="card">
+        <h3>Immutable Audit Trail</h3>
+        <div id="audit" class="muted">Loading…</div>
+      </div>
+    </section>
+
+    <section id="tab-blacklist" class="hidden">
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Blacklist Entries</h3>
+          <div id="blacklist" class="muted">Loading…</div>
+        </div>
+        <div class="card">
+          <h3>Add to Blacklist (admin)</h3>
+          <form id="bl-form">
+            <label for="bl-type">Entity type</label>
+            <select id="bl-type">
+              <option value="ip">IP address</option>
+              <option value="device">Device fingerprint</option>
+              <option value="merchant">Merchant id</option>
+              <option value="account">Account id</option>
+              <option value="country">Country code</option>
+            </select>
+            <label for="bl-value">Value</label>
+            <input id="bl-value" placeholder="e.g. 203.0.113.9" required />
+            <label for="bl-reason">Reason</label>
+            <input id="bl-reason" placeholder="Reason" />
+            <div class="mt"><button type="submit">Add entry</button></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/dashboard.js"></script>
+</body>
+</html>

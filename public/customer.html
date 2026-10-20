@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Portal | SentinelPay</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> SentinelPay · Customer</div>
+    <div class="user">
+      <span id="whoami"></span>
+      <button class="secondary small" onclick="API.logout()">Sign out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 style="margin-top:0;">My Accounts</h2>
+    <div id="accounts" class="grid cols-3"></div>
+
+    <div class="grid cols-2 mt">
+      <div class="card">
+        <h3>New Payment / Transfer</h3>
+        <form id="txn-form">
+          <div class="row">
+            <div>
+              <label for="op">Operation</label>
+              <select id="op">
+                <option value="deposit">Deposit</option>
+                <option value="withdraw">Withdraw</option>
+                <option value="transfer">Transfer</option>
+                <option value="payment">Pay merchant</option>
+              </select>
+            </div>
+            <div>
+              <label for="fromAccount">From account</label>
+              <select id="fromAccount"></select>
+            </div>
+          </div>
+          <div class="row">
+            <div id="toWrap" class="hidden">
+              <label for="toAccount">To account</label>
+              <input id="toAccount" type="number" placeholder="Destination account id" />
+            </div>
+            <div id="merchantWrap" class="hidden">
+              <label for="merchantId">Merchant id</label>
+              <input id="merchantId" type="number" placeholder="e.g. 1" />
+            </div>
+            <div>
+              <label for="amount">Amount</label>
+              <input id="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required />
+            </div>
+          </div>
+          <div class="mt">
+            <button type="submit">Submit transaction</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>My Transactions</h3>
+        <div id="txns" class="muted">Loading…</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/customer.js"></script>
+</body>
+</html>

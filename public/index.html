@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SentinelPay | Fraud Detection & Payment System</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <div class="center-wrap">
+    <div class="card login-card">
+      <div class="brand" style="margin-bottom:14px;">
+        <span class="dot"></span> SentinelPay
+      </div>
+      <h1>Sign in</h1>
+      <p class="sub">Financial Fraud Detection &amp; Payment Transaction System</p>
+
+      <form id="login-form">
+        <label for="username">Username or email</label>
+        <input id="username" name="username" autocomplete="username" required />
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required />
+
+        <div class="mt">
+          <button type="submit" style="width:100%;">Sign in</button>
+        </div>
+      </form>
+
+      <p class="sub mt" style="text-align:center;">
+        New here? <a href="#" id="show-register">Create an account</a>
+      </p>
+
+      <form id="register-form" hidden>
+        <h2 style="margin-top:6px;">Create account</h2>
+        <label for="fullName">Full name</label>
+        <input id="fullName" name="fullName" autocomplete="name" required />
+
+        <label for="reg-username">Username</label>
+        <input id="reg-username" name="reg-username" autocomplete="username" minlength="3" required />
+
+        <label for="reg-email">Email</label>
+        <input id="reg-email" name="reg-email" type="email" autocomplete="email" required />
+
+        <label for="reg-phone">Phone (optional)</label>
+        <input id="reg-phone" name="reg-phone" autocomplete="tel" />
+
+        <label for="reg-accountType">Account type</label>
+        <select id="reg-accountType" name="reg-accountType">
+          <option value="savings">Savings</option>
+          <option value="current">Current</option>
+          <option value="wallet">Wallet</option>
+        </select>
+
+        <label for="reg-password">Password</label>
+        <input id="reg-password" name="reg-password" type="password" autocomplete="new-password" minlength="6" required />
+
+        <div class="mt">
+          <button type="submit" style="width:100%;">Create account</button>
+        </div>
+        <p class="sub mt" style="text-align:center;">
+          Already have an account? <a href="#" id="show-login">Sign in</a>
+        </p>
+      </form>
+
+      <div class="mt muted" style="font-size:12px; line-height:1.7;">
+        <strong>Demo accounts</strong><br />
+        admin&nbsp;/ admin123 &nbsp;·&nbsp; analyst&nbsp;/ analyst123<br />
+        customer1&nbsp;/ customer123 &nbsp;·&nbsp; merchant1&nbsp;/ merchant123
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/login.js"></script>
+</body>
+</html>

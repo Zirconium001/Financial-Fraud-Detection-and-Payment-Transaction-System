@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merchant Portal | SentinelPay</title>
+  <link rel="stylesheet" href="/assets/css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="dot"></span> SentinelPay · Merchant</div>
+    <div class="user">
+      <span id="whoami"></span>
+      <button class="secondary small" onclick="API.logout()">Sign out</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2 style="margin-top:0;">Settlement Overview</h2>
+    <div id="summary" class="grid cols-3"></div>
+
+    <div class="card mt">
+      <h3>Merchant Settlements</h3>
+      <div id="table" class="muted">Loading…</div>
+    </div>
+  </main>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/merchant.js"></script>
+</body>
+</html>
