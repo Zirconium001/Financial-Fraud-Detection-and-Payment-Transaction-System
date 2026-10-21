@@ -14,8 +14,6 @@ https://githubfolder.getinfotoyou.com/
 
 ## Procedure
 
----
-
 1. just follow the link of the directory you want to download
 2. paste it here
 3. select the files you want to download
