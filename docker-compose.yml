@@ -1,0 +1,27 @@
+# Optional: local MySQL 8 for the Fraud Detection project.
+# Usage:  docker compose up -d
+# The schema/seed scripts in ./database are auto-loaded on first boot.
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: fraud_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: your_mysql_password
+      MYSQL_DATABASE: fraud_detection
+    ports:
+      - "3306:3306"
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --transaction-isolation=REPEATABLE-READ
+      - --max_connections=200
+    volumes:
+      - fraud_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pyour_mysql_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  fraud_mysql_data:

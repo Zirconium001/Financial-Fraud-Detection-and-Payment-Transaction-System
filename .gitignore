@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+
+# Runtime
+*.log
+pids/
+*.pid
+pids/*.pid
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Build output
+dist/
+coverage/
