@@ -35,7 +35,10 @@
     try { data = await res.json(); } catch (_) { /* no body */ }
 
     if (!res.ok) {
-      if (res.status === 401) { clearSession(); }
+      if (res.status === 401 && options.auth !== false) {
+        clearSession();
+        if (location.pathname !== '/index.html') location.href = '/index.html';
+      }
       const msg = (data && data.error && data.error.message) || ('Request failed (' + res.status + ')');
       const err = new Error(msg);
       err.status = res.status;
@@ -50,6 +53,12 @@
       location.href = '/index.html';
       return null;
     }
+    // Sessions created before permissions existed must sign in again.
+    if (!Array.isArray(s.permissions)) {
+      clearSession();
+      location.href = '/index.html';
+      return null;
+    }
     if (roles && roles.length && !roles.includes(s.role)) {
       location.href = defaultPageFor(s.role);
       return null;
@@ -61,6 +70,20 @@
     if (role === 'admin' || role === 'analyst') return '/dashboard.html';
     if (role === 'merchant') return '/merchant.html';
     return '/customer.html';
+  }
+
+  function permissions() {
+    const s = session();
+    return (s && Array.isArray(s.permissions)) ? s.permissions : [];
+  }
+
+  function can(permission) {
+    return permissions().includes(permission);
+  }
+
+  function canAny(keys) {
+    const granted = permissions();
+    return keys.some((key) => granted.includes(key));
   }
 
   function logout() {
@@ -100,6 +123,7 @@
 
   window.API = {
     token, session, setSession, clearSession, request, requireLogin,
-    defaultPageFor, logout, formatMoney, formatDate, badge, severity, toast, esc
+    defaultPageFor, permissions, can, canAny, logout,
+    formatMoney, formatDate, badge, severity, toast, esc
   };
 })();
