@@ -38,17 +38,19 @@ Node.js API and a vanilla HTML/CSS/JS dashboard.
 
 ---
 
-## 3. Project structure
+# 3. Project structure
 
 ```
 fraud detection project/
 ├── database/                 -- run in this order
-│   ├── 01_schema.sql         -- DDL: 12 tables, constraints, indexes, rules catalogue
-│   ├── 02_procedures.sql     -- ACID procedures + fraud-scoring engine + ring view
+│   ├── 01_schema.sql         -- DDL: 12 domain tables, constraints, indexes, rules catalogue
+│   ├── 02_procedures.sql     -- ACID procedures + fraud-scoring engine
 │   ├── 03_triggers.sql       -- audit-log + device-stamp + append-only enforcement
 │   ├── 04_views.sql          -- RBAC / reporting / relationship views
 │   ├── 05_rbac.sql           -- database roles + demo users (optional)
-│   └── 06_seed.sql           -- master-data seed
+│   ├── 06_seed.sql           -- master-data seed
+│   ├── 07_app_users.sql      -- bcrypt login accounts
+│   └── 08_permissions.sql    -- application permissions + role grants
 ├── src/
 │   ├── config/               -- env + pooled connection + transaction helper
 │   ├── middleware/           -- JWT auth, RBAC guard, error handling
