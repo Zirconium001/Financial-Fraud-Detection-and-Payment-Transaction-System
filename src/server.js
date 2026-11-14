@@ -6,12 +6,14 @@ const cors = require('cors');
 const config = require('./config/env');
 const { ping } = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
+const permissionsService = require('./services/permissionsService');
 
 const authRoutes = require('./routes/auth');
 const accountRoutes = require('./routes/accounts');
 const transactionRoutes = require('./routes/transactions');
 const fraudRoutes = require('./routes/fraud');
 const dashboardRoutes = require('./routes/dashboard');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -35,6 +37,7 @@ app.use('/api/accounts', accountRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/fraud', fraudRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
@@ -42,6 +45,7 @@ app.use(errorHandler);
 async function start() {
   try {
     await ping();
+    await permissionsService.loadAll();
     // eslint-disable-next-line no-console
     console.log(`[db] connected to ${config.db.host}:${config.db.port}/${config.db.database} (isolation: ${config.db.isolationLevel})`);
   } catch (err) {
