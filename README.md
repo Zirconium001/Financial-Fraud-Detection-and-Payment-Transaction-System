@@ -230,15 +230,15 @@ Status: `>= 70 → quarantined`, `>= 40 → flagged`, else `completed`.
 
 ---
 
-## 9. API reference
+# 9. API reference
 
 All endpoints are under `/api`. Authenticated endpoints expect
 `Authorization: Bearer <token>`.
 
-| Method | Path | Roles | Purpose |
-|--------|------|-------|---------|
-| POST | `/auth/login` | public | Obtain a JWT |
-| GET | `/auth/me` | any | Current profile |
+| Method | Path | Required permission | Purpose |
+|--------|------|---------------------|---------|
+| POST | `/auth/login` | public | Obtain a JWT + role permissions |
+| GET | `/auth/me` | any | Current profile + permissions |
 | GET | `/accounts` | any | Accounts visible to the caller |
 | GET | `/accounts/:id` | any | Account detail |
 | GET | `/transactions` | any | Transaction history (role-filtered) |
@@ -246,19 +246,28 @@ All endpoints are under `/api`. Authenticated endpoints expect
 | POST | `/transactions/deposit` | customer, admin | Deposit |
 | POST | `/transactions/withdraw` | customer, admin | Withdraw |
 | POST | `/transactions/transfer` | customer, admin | Transfer |
-| GET | `/fraud/flagged` | analyst, admin | Flagged/quarantined queue |
-| GET | `/fraud/rules` | analyst, admin | Rules + hit statistics |
-| GET | `/fraud/rings/devices` | analyst, admin | Shared-device rings |
-| GET | `/fraud/rings/ips` | analyst, admin | Shared-IP rings |
-| GET | `/fraud/top-risk` | analyst, admin | Highest-risk accounts |
-| GET/POST | `/fraud/blacklist` | analyst, admin | View / add blacklist entries |
-| POST | `/fraud/transactions/:id/reverse` | analyst, admin | Reverse a transaction |
-| POST | `/fraud/recompute-risk` | admin | Recompute customer risk scores |
-| GET | `/dashboard/summary` | analyst, admin | Daily + overall KPIs |
-| GET | `/dashboard/audit` | analyst, admin | Audit trail |
+| GET | `/fraud/flagged` | `fraud.queue.view` | Flagged/quarantined queue |
+| GET | `/fraud/rules` | `fraud.rules.view` | Rules + hit statistics |
+| PATCH | `/fraud/rules/:id` | `fraud.rules.edit` | Tune threshold / weight / activation |
+| GET | `/fraud/rings/ips` | `fraud.rings.view` | Shared-IP rings |
+| GET | `/fraud/top-risk` | `fraud.risk.view` | Highest-risk accounts |
+| GET | `/fraud/blacklist` | `fraud.blacklist.view` | View blacklist entries |
+| POST | `/fraud/blacklist` | `fraud.blacklist.edit` | Add a blacklist entry |
+| DELETE | `/fraud/blacklist/:id` | `fraud.blacklist.edit` | Remove a blacklist entry |
+| POST | `/fraud/transactions/:id/reverse` | `fraud.txn.reverse` | Reverse a transaction |
+| POST | `/fraud/recompute-risk` | `fraud.risk.recompute` | Recompute customer risk scores |
+| POST | `/fraud/block-suspicious` | `fraud.account.block` | Bulk-block accounts above a risk threshold |
+| POST | `/fraud/accounts/:id/block` | `fraud.account.block` | Freeze one account |
+| POST | `/fraud/accounts/:id/unblock` | `fraud.account.block` | Unfreeze one account |
+| GET | `/admin/users` | `admin.users.view` | List application users |
+| POST | `/admin/users` | `admin.users.manage` | Create an application user |
+| PATCH | `/admin/users/:id/role` | `admin.users.manage` | Change a user's role |
+| PATCH | `/admin/users/:id/status` | `admin.users.manage` | Activate / deactivate a user |
+| GET | `/admin/permissions` | `admin.users.view` | Permission catalog |
+| GET | `/dashboard/summary` | `dashboard.view` | Daily + overall KPIs |
+| GET | `/dashboard/audit` | `audit.view` | Audit trail |
 | GET | `/dashboard/merchant-settlement` | merchant, analyst, admin | Settlement report |
 | GET | `/health` | public | DB connectivity probe |
-
 ---
 
 ## 10. Mapping to the project proposal
