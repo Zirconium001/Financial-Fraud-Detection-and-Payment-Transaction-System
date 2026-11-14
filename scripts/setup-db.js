@@ -126,7 +126,7 @@ async function main() {
   // 1) Create the database with a bootstrap connection (no default schema).
   const root = await mysql.createConnection(baseConn());
   try {
-    console.log('[1/6] schema + master tables');
+    console.log('[1/7] schema + master tables');
     await runFile(root, '01_schema.sql', { label: '01_schema.sql' });
   } finally {
     await root.end();
@@ -135,19 +135,19 @@ async function main() {
   // 2) Everything else runs against the freshly created schema.
   const conn = await mysql.createConnection({ ...baseConn(), database: DB_NAME });
   try {
-    console.log('[2/6] stored procedures');
+    console.log('[2/7] stored procedures');
     await runFile(conn, '02_procedures.sql');
 
-    console.log('[3/6] triggers');
+    console.log('[3/7] triggers');
     await runFile(conn, '03_triggers.sql');
 
-    console.log('[4/6] views');
+    console.log('[4/7] views');
     await runFile(conn, '04_views.sql');
 
-    console.log('[5/6] RBAC roles (optional; errors tolerated on XAMPP/MariaDB)');
+    console.log('[5/7] RBAC roles (optional; errors tolerated on XAMPP/MariaDB)');
     await runFile(conn, '05_rbac.sql', { tolerateErrors: true });
 
-    console.log('[6/6] seed + synthetic transactions');
+    console.log('[6/7] seed + synthetic transactions');
     await runFile(conn, '06_seed.sql');
     await seedUsers(conn);
     await conn.query('CALL sp_recompute_all_risk()');
@@ -168,6 +168,9 @@ async function main() {
     } finally {
       await simPool.end();
     }
+
+    console.log('[7/7] application permissions');
+    await runFile(conn, '08_permissions.sql');
 
     console.log('\n  Login with: admin/admin123, analyst/analyst123,');
     console.log('              customer1/customer123, merchant1/merchant123');
